@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 public class Food {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long foodId;
-
     private String name;
     private String description;
     private String image;
@@ -26,7 +26,7 @@ public class Food {
     private String level;
     private String ingredient;
     private String dietary;
+    private String country;
 
     // Getters and Setters
-
 }
