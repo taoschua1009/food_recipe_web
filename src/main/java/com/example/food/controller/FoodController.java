@@ -16,6 +16,8 @@ import com.example.food.dto.Agenda;
 import com.example.food.dto.AgendaRespond;
 import com.example.food.dto.FoodRequest;
 import com.example.food.dto.FoodDTO;
+import com.example.food.dto.CommentDTO;
+
 import com.example.food.service.FoodService;
 
 @RestController
@@ -40,10 +42,10 @@ public class FoodController {
     public List<FoodDTO> getFoodsByCountry(@PathVariable String country) {
         return foodService.getFoodsByCountry(country);
     }
-    
+
     @GetMapping("/dietary/{dietary}")
     public List<FoodDTO> getFoodsByDietary(@PathVariable String dietary) {
         return foodService.getFoodsByDietary(dietary);
     }
-
+    
 }
