@@ -15,7 +15,6 @@ import com.example.food.entity.CookingMethod;
 import com.example.food.entity.Food;
 import com.example.food.entity.Comment;
 
-
 import com.example.food.repository.CookingMethodRepository;
 import com.example.food.repository.FoodRepository;
 import com.example.food.repository.CommentRepository;
@@ -32,7 +31,6 @@ public class FoodServiceImpl implements FoodService {
 
     @Autowired
     private CommentRepository commentRepository;
-  
 
     /**
      * Retrieves all distinct countries, dietary options, and cooking methods
@@ -71,9 +69,6 @@ public class FoodServiceImpl implements FoodService {
                 .build();
     }
 
-
-    
-
     @Override
     public List<FoodDTO> getFoodsByCountry(String country) {
         List<Food> foods = foodRepository.findByCountry(country);
@@ -92,7 +87,6 @@ public class FoodServiceImpl implements FoodService {
                 .collect(Collectors.toList());
     }
 
-    
     @Override
     public AgendaRespond addFood(FoodRequest foodRequest) {
 
@@ -130,6 +124,7 @@ public class FoodServiceImpl implements FoodService {
                 .time(savedFood.getTime())
                 .dietary(savedFood.getDietary())
                 .country(savedFood.getCountry())
+                .ingredient(savedFood.getIngredient())
                 .build();
         // Save to database
         return AgendaRespond.builder()
@@ -138,6 +133,7 @@ public class FoodServiceImpl implements FoodService {
                 .FoodDTO(foodDTO)
                 .build();
     }
+
     @Override
     public List<FoodDTO> getFoodsByDietary(String dietary) {
         List<Food> foods = foodRepository.findByDietary(dietary);
@@ -153,6 +149,5 @@ public class FoodServiceImpl implements FoodService {
                 .build())
                 .collect(Collectors.toList());
     }
-    
 
 }
