@@ -122,6 +122,7 @@ public class FoodServiceImpl implements FoodService {
 
         // Create FoodInfo response
         FoodDTO foodDTO = FoodDTO.builder()
+                .foodId(savedFood.getFoodId())
                 .name(savedFood.getName())
                 .description(savedFood.getDescription())
                 .image(savedFood.getImage())
