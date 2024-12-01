@@ -1,5 +1,8 @@
 package com.example.food.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,5 +54,21 @@ public class CookingMethodServiceImpl implements CookingMethodService {
                 .name(savedMethod.getName())
                 .foodId(savedMethod.getFood().getFoodId())
                 .build();
+    }
+
+    @Override
+    public List<CookingMethodDTO> getAllCookingMethods() {
+        return cookingMethodRepository.findAll().stream()
+                .map(method -> CookingMethodDTO.builder()
+                        .methodId(method.getMethodId())
+                        .rating(method.getRating())
+                        .description(method.getDescription())
+                        .image(method.getImage())
+                        .ingredient(method.getIngredient())
+                        .country(method.getCountry())
+                        .name(method.getName())
+                        .foodId(method.getFood().getFoodId()) // Map Food ID
+                        .build())
+                .collect(Collectors.toList());
     }
 }
