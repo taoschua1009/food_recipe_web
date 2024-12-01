@@ -20,6 +20,7 @@ public class FoodRequest {
     private String level;          
     private String dietary;        
     private String country;
+    private String ingredient;
 
     // Constructor, Getters, and Setters
 }
