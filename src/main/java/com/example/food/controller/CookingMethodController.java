@@ -20,13 +20,13 @@ public class CookingMethodController {
     @Autowired
     private CookingMethodService cookingMethodService;
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<CookingMethodDTO> addCookingMethod(@RequestBody CookingMethodDTO cookingMethodDTO) {
         CookingMethodDTO savedMethod = cookingMethodService.addCookingMethod(cookingMethodDTO);
         return ResponseEntity.ok(savedMethod);
     }
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<CookingMethodDTO>> getAllCookingMethods() {
         List<CookingMethodDTO> methods = cookingMethodService.getAllCookingMethods();
         return ResponseEntity.ok(methods);

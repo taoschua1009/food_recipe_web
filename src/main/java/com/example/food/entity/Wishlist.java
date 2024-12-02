@@ -24,7 +24,7 @@ public class Wishlist {
     private Food food;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userid")
     private User user;
 
 }
