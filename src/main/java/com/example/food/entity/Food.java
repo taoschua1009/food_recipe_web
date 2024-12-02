@@ -28,6 +28,7 @@ public class Food {
     private String ingredient;
     private String dietary;
     private String country;
+    private String method;
 
     // Getters and Setters
 }

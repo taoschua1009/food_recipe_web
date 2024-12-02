@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.food.dto.CommentDTO;
-import com.example.food.entity.Comment;
+
 import com.example.food.service.CommentService;
 
 @RestController

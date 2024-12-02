@@ -10,9 +10,9 @@ import com.example.food.dto.Agenda;
 import com.example.food.dto.AgendaRespond;
 import com.example.food.dto.FoodDTO;
 import com.example.food.dto.FoodRequest;
-import com.example.food.entity.CookingMethod;
+
 import com.example.food.entity.Food;
-import com.example.food.repository.CookingMethodRepository;
+
 import com.example.food.repository.FoodRepository;
 import com.example.food.utils.FoodUtils;
 
@@ -22,8 +22,7 @@ public class FoodServiceImpl implements FoodService {
     @Autowired
     private FoodRepository foodRepository;
 
-    @Autowired
-    private CookingMethodRepository cookingMethodRepository;
+  
 
     
 
@@ -50,9 +49,9 @@ public class FoodServiceImpl implements FoodService {
                 .collect(Collectors.toList());
 
         // Retrieve distinct cooking methods from CookingMethod table
-        List<String> cookingMethods = cookingMethodRepository.findAll()
+        List<String> methods = foodRepository.findAll()
                 .stream()
-                .map(CookingMethod::getName)
+                .map(Food::getMethod)
                 .distinct()
                 .collect(Collectors.toList());
 
@@ -60,7 +59,7 @@ public class FoodServiceImpl implements FoodService {
         return Agenda.builder()
                 .country(String.join(", ", countries))
                 .dieatry(String.join(", ", dietaryOptions))
-                .cookingMethod(String.join(", ", cookingMethods))
+                .method(String.join(", ", methods))
                 .build();
     }
 

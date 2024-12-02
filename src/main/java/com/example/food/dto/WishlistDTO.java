@@ -1,4 +1,6 @@
+
 package com.example.food.dto;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,8 +10,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Agenda {
-    private String country;
-    private String dieatry;
-    private String method;
+public class WishlistDTO {
+
+    private Long wishlistId;
+    private Long foodId; // Reference to Food entity
+    private Long userid; // Reference to User entity
 }
+
+

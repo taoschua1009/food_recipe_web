@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
                 .email(savedUser.getEmail())
                 .userName(savedUser.getUserName())
                 .image(savedUser.getImage())
-                .password(null) // Avoid returning the password
+                .password(savedUser.getPassword()) // Avoid returning the password
                 .build();
     }
 
