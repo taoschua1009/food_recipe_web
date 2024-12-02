@@ -1,4 +1,5 @@
 package com.example.food.entity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 public class Wishlist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "wishlist_id") 
     private Long wishlistId;
 
     @ManyToOne
