@@ -13,4 +13,6 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
     List<Food> findByCountry(String country);
 
     List<Food> findByDietary(String dietary);
+
+    List<Food> findByMethod (String method);
 }

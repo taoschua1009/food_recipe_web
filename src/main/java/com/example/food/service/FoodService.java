@@ -18,4 +18,6 @@ public interface FoodService {
 
     List<FoodDTO> getFoodsByDietary(String dietary);
 
+    List<FoodDTO> getFoodsByMethod(String method);
+
 }

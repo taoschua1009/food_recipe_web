@@ -10,9 +10,7 @@ import com.example.food.dto.Agenda;
 import com.example.food.dto.AgendaRespond;
 import com.example.food.dto.FoodDTO;
 import com.example.food.dto.FoodRequest;
-
 import com.example.food.entity.Food;
-
 import com.example.food.repository.FoodRepository;
 import com.example.food.utils.FoodUtils;
 
@@ -21,10 +19,6 @@ public class FoodServiceImpl implements FoodService {
 
     @Autowired
     private FoodRepository foodRepository;
-
-  
-
-    
 
     /**
      * Retrieves all distinct countries, dietary options, and cooking methods
@@ -136,14 +130,33 @@ public class FoodServiceImpl implements FoodService {
         return foods.stream()
                 .map(food -> FoodDTO.builder()
                 .name(food.getName())
+                .foodId(food.getFoodId())
                 .description(food.getDescription())
                 .image(food.getImage())
                 .level(food.getLevel())
                 .time(food.getTime())
                 .dietary(food.getDietary())
                 .country(food.getCountry())
+                .ingredient(food.getIngredient())
                 .build())
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<FoodDTO> getFoodsByMethod(String method) {
+        List<Food> foods = foodRepository.findByMethod(method);
+        return foods.stream()
+                .map(food -> FoodDTO.builder()
+                .name(food.getName())
+                .foodId(food.getFoodId())
+                .description(food.getDescription())
+                .image(food.getImage())
+                .level(food.getLevel())
+                .time(food.getTime())
+                .dietary(food.getDietary())
+                .country(food.getCountry())
+                .ingredient(food.getIngredient())
+                .build())
+                .collect(Collectors.toList());
+    }
 }

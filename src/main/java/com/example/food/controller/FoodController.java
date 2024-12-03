@@ -50,5 +50,10 @@ public class FoodController {
     public List<FoodDTO> getFoodsByDietary(@PathVariable String dietary) {
         return foodService.getFoodsByDietary(dietary);
     }
+
+    @GetMapping("/method/{method}")
+    public List<FoodDTO> getFoodsByMethod(@PathVariable String method) {
+        return foodService.getFoodsByMethod(method);
+    }
     
 }
