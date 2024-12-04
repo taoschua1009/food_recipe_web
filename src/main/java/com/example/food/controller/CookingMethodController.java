@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,4 +32,14 @@ public class CookingMethodController {
         List<CookingMethodDTO> methods = cookingMethodService.getAllCookingMethods();
         return ResponseEntity.ok(methods);
     }
+
+    @GetMapping("/{foodId}")
+    public ResponseEntity<CookingMethodDTO> getCookingMethodByFoodId(@PathVariable Long foodId) {
+        CookingMethodDTO cookingMethod = cookingMethodService.getCookingMethodByFoodId(foodId);
+        if (cookingMethod == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(cookingMethod);
+    }
+ 
 }

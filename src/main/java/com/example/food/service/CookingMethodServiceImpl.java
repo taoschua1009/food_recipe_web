@@ -1,6 +1,7 @@
 package com.example.food.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,4 +72,26 @@ public class CookingMethodServiceImpl implements CookingMethodService {
                         .build())
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public CookingMethodDTO getCookingMethodByFoodId(Long foodId) {
+        CookingMethod cookingMethod = cookingMethodRepository.findFirstByFoodFoodId(foodId);
+        return cookingMethod != null ? convertToDTO(cookingMethod) : null;
+    }
+
+    private CookingMethodDTO convertToDTO(CookingMethod cookingMethod) {
+        CookingMethodDTO dto = new CookingMethodDTO();
+        dto.setMethodId(cookingMethod.getMethodId());
+        dto.setRating(cookingMethod.getRating());
+        dto.setDescription(cookingMethod.getDescription());
+        dto.setImage(cookingMethod.getImage());
+        dto.setIngredient(cookingMethod.getIngredient());
+        dto.setCountry(cookingMethod.getCountry());
+        dto.setName(cookingMethod.getName());
+        dto.setFoodId(cookingMethod.getFood().getFoodId());
+        return dto;
+    }
+  
 }
+    
+
