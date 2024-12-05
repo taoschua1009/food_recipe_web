@@ -69,4 +69,21 @@ public class CommentServiceImpl implements CommentService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<CommentDTO> getCommentsByFoodId(Long foodId) {
+        // Fetch comments by foodId using the repository method
+        return commentRepository.findByFood_FoodId(foodId).stream()
+                .map(comment -> CommentDTO.builder()
+                        .commentId(comment.getCommentId())
+                        .date(comment.getDate())
+                        .description(comment.getDescription())
+                        .userId(comment.getUser().getUserId())
+                        .foodId(comment.getFood().getFoodId())
+                        .build())
+                .collect(Collectors.toList());
+    }
+    
+    
+    
+
 }

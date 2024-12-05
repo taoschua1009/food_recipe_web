@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.food.dto.CookingMethodDTO;
 import com.example.food.service.CookingMethodService;
 
+
 @RestController
 @RequestMapping("/api/cookingmethod")
 public class CookingMethodController {
@@ -42,4 +43,5 @@ public class CookingMethodController {
         return ResponseEntity.ok(cookingMethod);
     }
  
+    
 }

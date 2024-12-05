@@ -8,5 +8,6 @@ import com.example.food.entity.Wishlist;
 
 public interface WishListRepository extends JpaRepository<Wishlist, Long> {
     List<Wishlist> findByUser_UserId(Long userId);
+  
     
 }
