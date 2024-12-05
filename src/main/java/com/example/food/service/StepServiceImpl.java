@@ -1,4 +1,4 @@
-package com.example.food.service.impl;
+package com.example.food.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +11,6 @@ import com.example.food.entity.Food;
 import com.example.food.entity.Step;
 import com.example.food.repository.FoodRepository;
 import com.example.food.repository.StepRepository;
-import com.example.food.service.StepService;
 
 @Service
 public class StepServiceImpl implements StepService {
