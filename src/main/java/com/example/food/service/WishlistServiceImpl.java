@@ -38,6 +38,8 @@ public class WishlistServiceImpl implements WishlistService {
                     WishlistDTO wishlistDTO = new WishlistDTO();
                     wishlistDTO.setName(food.getName());
                     wishlistDTO.setImage(food.getImage());
+                    wishlistDTO.setFoodId(food.getFoodId());
+
                     return wishlistDTO;
                 })
                 .collect(Collectors.toList());
@@ -62,6 +64,7 @@ public class WishlistServiceImpl implements WishlistService {
         WishlistDTO wishlistDTO = new WishlistDTO();
         wishlistDTO.setName(food.getName());
         wishlistDTO.setImage(food.getImage());
+        
 
         return wishlistDTO;
     }
