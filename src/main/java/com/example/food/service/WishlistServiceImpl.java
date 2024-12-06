@@ -68,4 +68,14 @@ public class WishlistServiceImpl implements WishlistService {
 
         return wishlistDTO;
     }
+
+    @Override
+    public void deleteWishlist(Long userId, Long wishlistId) {
+        // Find the wishlist item by both wishlistId and userId
+        Wishlist wishlist = wishListRepository.findByWishlistIdAndUser_UserId(wishlistId, userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Wishlist item not found with ID: " + wishlistId + " for user ID: " + userId));
+
+        // Delete the wishlist item
+        wishListRepository.delete(wishlist);
+    }
 }
