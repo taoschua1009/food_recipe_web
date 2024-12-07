@@ -13,6 +13,7 @@ public class WishlistRequest {
 
     private Long foodId;
     private Long userId;
+    
 
     // Getters and Setters
     public Long getFoodId() {
@@ -30,4 +31,6 @@ public class WishlistRequest {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+    
+    
 }

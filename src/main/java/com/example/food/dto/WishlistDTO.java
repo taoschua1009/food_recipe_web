@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WishlistDTO {
+
     private String name;
     private String image;
     private Long foodId;
-
-    
+    private Long wishlistId;
 }
