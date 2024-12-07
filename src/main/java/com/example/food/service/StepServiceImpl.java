@@ -32,7 +32,7 @@ public class StepServiceImpl implements StepService {
             // Create the Step entity
             Step step = new Step();
             step.setDescription(stepDTO.getDescription());
-            step.setFood(food);  // Link to the Food entity
+            step.setFood(food); // Link to the Food entity
 
             // Save the Step entity to the database
             stepRepository.save(step);
@@ -43,17 +43,17 @@ public class StepServiceImpl implements StepService {
     public List<StepDTO> getStepsByFoodId(Long foodId) {
         // Find the food entity by its ID (ensure the food exists)
         foodRepository.findById(foodId).orElseThrow(() -> new RuntimeException("Food not found with ID: " + foodId));
-    
+
         // Fetch all steps for the given foodId
         List<Step> steps = stepRepository.findByFood_foodId(foodId);
-    
+
         // Map each Step entity to StepDTO
         return steps.stream()
                 .map(step -> StepDTO.builder()
-                        .foodId(step.getFood().getFoodId())  // Mapping foodId
+                        .foodId(step.getFood().getFoodId()) // Mapping foodId
                         .description(step.getDescription()) // Mapping description
                         .build())
                 .collect(Collectors.toList());
     }
-    
+
 }

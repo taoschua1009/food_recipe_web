@@ -21,8 +21,6 @@ import com.example.food.service.WishlistService;
 @RequestMapping("/api/wishlist")
 public class WishlistController {
 
-    
-
     @Autowired
     public WishlistService wishlistService;
 
@@ -39,7 +37,8 @@ public class WishlistController {
     }
 
     @DeleteMapping("/{userid}/{wishlistId}")
-    public ResponseEntity<String> deleteWishlist(@PathVariable("userid") Long userId, @PathVariable("wishlistId") Long wishlistId) {
+    public ResponseEntity<String> deleteWishlist(@PathVariable("userid") Long userId,
+            @PathVariable("wishlistId") Long wishlistId) {
         wishlistService.deleteWishlist(userId, wishlistId);
         return ResponseEntity.status(HttpStatus.OK).body("Wishlist item deleted successfully.");
     }
