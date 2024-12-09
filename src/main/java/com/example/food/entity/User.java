@@ -1,5 +1,6 @@
 package com.example.food.entity;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,4 +27,6 @@ public class User {
     private String userName;
     private String image;
     private String password;
+
+    
 }

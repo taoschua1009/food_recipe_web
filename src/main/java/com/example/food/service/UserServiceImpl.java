@@ -7,6 +7,7 @@ import com.example.food.dto.UserDTO;
 import com.example.food.entity.User;
 import com.example.food.repository.UserRepository;
 
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -50,5 +51,20 @@ public class UserServiceImpl implements UserService {
                         .build())
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
     }
+
+//     @Autowired
+//     private BCryptPasswordEncoder passwordEncoder;
+
+//     @Override
+//     public User registerUser(User user) {
+//         // Mã hóa mật khẩu
+//         user.setPassword(passwordEncoder.encode(user.getPassword()));
+//         return userRepository.save(user);
+//     }
+
+//     @Override
+//     public User getUserByEmail(String email) {
+//         return userRepository.findByEmail(email);
+//     }
     
 }
