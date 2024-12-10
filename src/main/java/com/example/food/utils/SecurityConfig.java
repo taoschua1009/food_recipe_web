@@ -1,7 +1,5 @@
 package com.example.food.utils;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,37 +16,33 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.food.service.CustomUserDetailsService;
 
-
-
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    
-    private CustomUserDetailsService userDetailsService;   
+
+    private CustomUserDetailsService userDetailsService;
 
     @Bean
     public UserDetailsService userDetailsService() {
         return userDetailsService; // Ensure CustomUserDetailsService is used
-    } 
+    }
 
     @Autowired
-    public SecurityConfig(CustomUserDetailsService userDetailsService){
+    public SecurityConfig(CustomUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http    
+        http
                 .csrf().disable()
                 .authorizeRequests()
                 .requestMatchers("/api/auth/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .httpBasic();
 
@@ -57,36 +51,32 @@ public class SecurityConfig {
 
     // @Bean
     // public UserDetailsService users(){
-    //     UserDetails admin = User.builder()
-    //             .username("admin")
-    //             .password("password")
-    //             .roles("ADMIN")
-    //             .build();
+    // UserDetails admin = User.builder()
+    // .username("admin")
+    // .password("password")
+    // .roles("ADMIN")
+    // .build();
 
-    //     UserDetails user = User.builder()
-    //             .username("user")
-    //             .password("password")
-    //             .roles("USER")
-    //             .build();     
-    //     return new InMemoryUserDetailsManager(admin, user);        
+    // UserDetails user = User.builder()
+    // .username("user")
+    // .password("password")
+    // .roles("USER")
+    // .build();
+    // return new InMemoryUserDetailsManager(admin, user);
     // }
-
-    
-
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
-            .userDetailsService(userDetailsService) // Use the CustomUserDetailsService
-            .passwordEncoder(passwordEncoder()) // Ensure password encoder is set
-            .and()
-            .build();
+                .userDetailsService(userDetailsService) // Use the CustomUserDetailsService
+                .passwordEncoder(passwordEncoder()) // Ensure password encoder is set
+                .and()
+                .build();
     }
-    
+
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-     
 }
