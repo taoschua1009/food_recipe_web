@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.food.dto.LoginDto;
 import com.example.food.dto.RegisterDto;
 import com.example.food.entity.Role;
+import com.example.food.entity.User;
 import com.example.food.entity.UserEntity;
 import com.example.food.repository.RoleRepository;
 import com.example.food.repository.UserEntityRepository;
+import com.example.food.repository.UserRepository;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -29,15 +31,17 @@ public class AuthController {
 
     private AuthenticationManager authenticationManager;
     private UserEntityRepository userEntityRepository;
+    private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, UserEntityRepository userEntityRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public AuthController(AuthenticationManager authenticationManager, UserEntityRepository userEntityRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder,UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.userEntityRepository = userEntityRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/login")
@@ -63,20 +67,43 @@ public class AuthController {
 
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
-        // if (userEntityRepository.existByUsername(registerDto.getUsername())) {
-        //     return new ResponseEntity<>("User is taken!", HttpStatus.BAD_REQUEST);
-        // }
-
-        UserEntity user = new UserEntity();
-        user.setUsername(registerDto.getUsername());
-        user.setPassword(passwordEncoder.encode((registerDto.getPassword())));
-
-        Role roles = roleRepository.findByName("USER").get();
-        user.setRoles(Collections.singletonList(roles));
-
-        userEntityRepository.save(user);
-
-        return new ResponseEntity<>("User registered success!", HttpStatus.OK);
+        try {
+            // // 1. Kiểm tra username đã tồn tại
+            // if (userEntityRepository.existsByUsername(registerDto.getUsername())) {
+            //     return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
+            // }
+    
+            // 2. Khởi tạo User trước
+            User user = User.builder()
+                .userName(registerDto.getUsername())
+                .password(passwordEncoder.encode(registerDto.getPassword()))
+                .build();
+    
+            // 3. Khởi tạo UserEntity
+            UserEntity userEntity = new UserEntity();
+            userEntity.setUsername(registerDto.getUsername());
+            userEntity.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+    
+            // 4. Thiết lập Role
+            Role role = roleRepository.findByName("USER")
+                .orElseThrow(() -> new RuntimeException("Role 'USER' not found"));
+            userEntity.setRoles(Collections.singletonList(role));
+    
+            // 5. Thiết lập mối quan hệ hai chiều
+            userEntity.setUser(user);
+            user.setUserEntity(userEntity);
+    
+            // 6. Lưu User (sẽ cascade lưu UserEntity)
+            userRepository.save(user);
+    
+            return new ResponseEntity<>("User registered successfully!", HttpStatus.OK);
+        } catch (Exception e) {
+            // 7. Log lỗi để debug
+            e.printStackTrace(); 
+            return new ResponseEntity<>("Registration failed: " + e.getMessage(), 
+                                      HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+    
 
 }
