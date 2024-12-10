@@ -31,14 +31,38 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
 
-    @Override
-    public UserDetails loadUserByUsername (String username) throws UsernameNotFoundException{
-        UserEntity userEntity = userEntityRepository.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("Username not found"));
-        return new User(userEntity.getUsername(), userEntity.getPassword(), mapRolesToAuthorities(userEntity.getRoles()));
+    // @Override
+    // public UserDetails loadUserByUsername (String username) throws UsernameNotFoundException{
+    //     UserEntity userEntity = userEntityRepository.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("Username not found"));
+    //     return new User(userEntity.getUsername(), userEntity.getPassword(), mapRolesToAuthorities(userEntity.getRoles()));
 
-    }
+    // }
 
     private Collection<GrantedAuthority> mapRolesToAuthorities(List<Role> roles){
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        try {
+            System.out.println("Loading user: " + username);
+            UserEntity user = userEntityRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+                
+            System.out.println("Found user: " + user.getUsername());
+            System.out.println("Password hash: " + user.getPassword());
+            System.out.println("Roles: " + user.getRoles());
+    
+            return new User(user.getUsername(), 
+                           user.getPassword(),
+                           user.getRoles().stream()
+                               .map(role -> new SimpleGrantedAuthority(role.getName()))
+                               .collect(Collectors.toList()));
+        } catch (Exception e) {
+            System.out.println("Error loading user: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
+    }
+    
 }
