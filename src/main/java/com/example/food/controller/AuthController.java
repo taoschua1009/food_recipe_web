@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.food.dto.LoginDto;
+import com.example.food.dto.LoginResponseDto;
 import com.example.food.dto.RegisterDto;
 import com.example.food.entity.Role;
 import com.example.food.entity.User;
@@ -45,7 +46,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
         try {
             // Authenticate the user
             Authentication authentication = authenticationManager.authenticate(
@@ -57,11 +58,24 @@ public class AuthController {
     
             // Set the authentication context
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            return new ResponseEntity<>("User signed in successfully", HttpStatus.OK);
+            
+            // Lấy thông tin user từ UserEntity
+            UserEntity userEntity = userEntityRepository.findByUsername(loginDto.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+                
+            // Tạo response
+            LoginResponseDto responseDto = LoginResponseDto.builder()
+                .userId(userEntity.getUser().getUserId())
+                .username(userEntity.getUsername())
+                .password(loginDto.getPassword())  // Không nên trả về password trong thực tế
+                .build();
+    
+            return new ResponseEntity<>(responseDto, HttpStatus.OK);
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
-            return new ResponseEntity<>("Authentication failed", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Authentication failed: " + e.getMessage(), 
+                HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
