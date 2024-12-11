@@ -18,6 +18,7 @@ public class CommentDTO {
     private Long userId;
     private Long foodId;
     private String date;
+    private String userName;
 
     // Constructor, Getters, and Setters
 }
