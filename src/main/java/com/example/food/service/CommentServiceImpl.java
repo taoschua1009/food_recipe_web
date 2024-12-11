@@ -65,6 +65,7 @@ public class CommentServiceImpl implements CommentService {
                         .description(comment.getDescription())
                         .userId(comment.getUser().getUserId())
                         .foodId(comment.getFood().getFoodId())
+                        .userName(comment.getUser().getUserName())
                         .build())
                 .collect(Collectors.toList());
     }
